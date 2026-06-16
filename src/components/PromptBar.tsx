@@ -1,7 +1,8 @@
-import { useRef, type ChangeEvent } from 'react'
+import { useRef, useState, type ChangeEvent } from 'react'
 import { useStudio } from '../store/studio'
 import { interpretPrompt } from '../interpret/client'
 import type { ImageInput } from '../interpret/schema'
+import BridgeModal from './BridgeModal'
 
 interface Props {
   apiAvailable: boolean | null
@@ -11,6 +12,7 @@ export default function PromptBar({ apiAvailable }: Props) {
   const { prompt, setPrompt, image, setImage, busy, setBusy, applyInterpretation, lastSource, lastNotes } =
     useStudio()
   const fileRef = useRef<HTMLInputElement>(null)
+  const [showBridge, setShowBridge] = useState(false)
 
   async function onFile(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
@@ -71,25 +73,32 @@ export default function PromptBar({ apiAvailable }: Props) {
           </span>
         )}
       </div>
+      <div className="prompt-row">
+        <button className="btn" onClick={() => setShowBridge(true)} title="Use the Claude you already have — free">
+          ✦ Use my Claude <span className="free-pill">free</span>
+        </button>
+      </div>
       <p className="note">
-        {apiAvailable === false && (
+        {!lastSource && apiAvailable === false && (
           <>
-            <b>Offline mode.</b> Using built-in keyword interpretation. Add an{' '}
-            <code>ANTHROPIC_API_KEY</code> to <code>.env</code> for richer prompts &amp; image analysis.
+            <b>Generate</b> uses built-in keyword interpretation (free, offline). For real Claude
+            understanding at no cost, tap <b>Use my Claude</b>.
           </>
         )}
-        {apiAvailable === true && lastSource == null && (
+        {!lastSource && apiAvailable === true && (
           <>
             <b>Claude connected.</b> Describe a vibe, or upload an image and say “similar to this”.
           </>
         )}
+        {!lastSource && apiAvailable == null && <>Describe the type you want, then Generate.</>}
         {lastSource && (
           <>
-            <b>{lastSource === 'api' ? 'Interpreted by Claude.' : 'Interpreted offline.'}</b>{' '}
+            <b>{lastSource === 'offline' ? 'Interpreted offline.' : 'Designed with Claude.'}</b>{' '}
             {lastNotes}
           </>
         )}
       </p>
+      {showBridge && <BridgeModal onClose={() => setShowBridge(false)} />}
     </div>
   )
 }

@@ -42,5 +42,26 @@ for (const p of PRESETS) {
 }
 console.log(`fonts: compiled ${PRESETS.length} presets`)
 
+// 4) Bridge: prompt builds, and replies parse tolerantly (fenced / prose / bare).
+import { buildClaudePrompt, parseClaudeReply } from '../src/interpret/bridge'
+if (!buildClaudePrompt('bold rounded retro', true).includes('JSON')) fail('bridge prompt missing JSON instruction')
+const replies = [
+  '```json\n{"name":"Juno","weight":0.14,"serif":"slab","fill":"#112233"}\n```',
+  'Here you go!\n\n{"name":"Vela","weight":0.06,"contrast":0.7,"terminal":"round"}\n\nHope that helps.',
+  '{"weight":0.1,"width":0.8,"effect":"stack"}',
+]
+for (const r of replies) {
+  const res = parseClaudeReply(r)
+  if (!res.params || res.params.weight === undefined) fail(`bridge parse missed weight in: ${r.slice(0, 30)}…`)
+  if (res.source !== 'bridge') fail('bridge parse wrong source')
+}
+try {
+  parseClaudeReply('sorry, no json here')
+  fail('bridge parse should have thrown on junk')
+} catch {
+  /* expected */
+}
+console.log('bridge: prompt builds, replies parse, junk rejected')
+
 console.log(issues === 0 ? '\nALL CHECKS PASSED ✓' : `\n${issues} ISSUE(S) ✗`)
 process.exit(issues === 0 ? 0 : 1)

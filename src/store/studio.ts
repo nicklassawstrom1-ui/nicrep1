@@ -14,7 +14,7 @@ interface StudioState {
   displayText: string
   image: ImageInput | null
   busy: boolean
-  lastSource: 'api' | 'offline' | null
+  lastSource: 'api' | 'offline' | 'bridge' | null
   lastNotes: string | null
 
   setMode: (m: CreationMode) => void

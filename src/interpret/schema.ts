@@ -16,5 +16,5 @@ export interface InterpretResult {
   display?: Partial<DisplayStyle>
   name?: string
   notes?: string
-  source: 'api' | 'offline'
+  source: 'api' | 'offline' | 'bridge'
 }
