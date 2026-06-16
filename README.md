@@ -28,6 +28,6 @@ npm run preview
 
 ## Deploy
 
-Pushar du till `claude/dazzling-davinci-p8isxg` eller `claude/bold-johnson-8yu55t`
-publiceras sajten automatiskt till GitHub Pages via `.github/workflows/deploy.yml`.
-Sajten serveras under `/nicrep1/` (project site).
+Pushes till `claude/bold-johnson-8yu55t` publiceras automatiskt till GitHub Pages
+via `.github/workflows/deploy.yml`. Sajten serveras under `/nicrep1/`
+(project site).
