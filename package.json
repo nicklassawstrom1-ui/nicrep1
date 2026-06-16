@@ -1,9 +1,9 @@
 {
-  "name": "typeforge",
+  "name": "century-arts",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
-  "description": "Typeforge — generate original typography from prompts and reference images. Display mode (SVG headlines/logos) + Typeface mode (real .otf/.ttf fonts).",
+  "description": "Century Arts — digital reklambyrå. Stor look, lågt pris för lokala företag. Film, hemsidor, logos, posters & musik.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -11,16 +11,11 @@
     "typecheck": "tsc -b --noEmit"
   },
   "dependencies": {
-    "idb-keyval": "^6.2.1",
-    "opentype.js": "^1.3.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "zustand": "^5.0.0"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@anthropic-ai/sdk": "^0.40.0",
     "@types/node": "^22.10.0",
-    "@types/opentype.js": "^1.3.8",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react": "^4.3.4",
